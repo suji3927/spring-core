@@ -1,8 +1,9 @@
 package hello.core.order;
 
 import hello.core.AppConfig;
-import hello.core.discount.RateDiscountPolicy;
-import hello.core.member.*;
+import hello.core.member.Grade;
+import hello.core.member.Member;
+import hello.core.member.MemberService;
 
 public class OrderApp {
 

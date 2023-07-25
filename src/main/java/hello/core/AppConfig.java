@@ -30,6 +30,8 @@ public class AppConfig {
         return new MemoryMemberRepository();
     }
 
+    // 할인 정책 변경 시 구성 역할을 담당하는 AppConfig만 변경하면 됨.
+    // 구성 영역은 수시로 변경이 가능하다. 단, 사용 영역은 변경 불가
     public DiscountPolicy discountPolicy() { // DiscountPolicy 역할
         return new RateDiscountPolicy();
     }
