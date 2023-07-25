@@ -7,7 +7,7 @@ import hello.core.member.MemoryMemberRepository;
 
 public class OrderServiceImpl implements OrderService{
 
-    private final MemberRepository memberRepository = new MemoryMemberRepository();
+    private final MemberRepository memberRepository;
 
     // OCP 위반 : 할인 정책 변경에 따른 문제점 : 구현체를 변경해줘야 한다.
     // 구현체: FixDiscountPolicy -> RateDiscountPolicy
@@ -15,8 +15,14 @@ public class OrderServiceImpl implements OrderService{
 //    private final DiscountPolicy discountPolicy = new FixDiscountPolicy();
 
     // 문제 해결 방법 : 인터페이스에만 의존하도록 코드 변경 -> 그에 따른 문제점 또 발생: NullPointerException 발생
-    // 최종 해결 방안 : 누군가가 OrderServiceImpl에 DiscountPolicy의 구현 객체를 대신 생성 후 주입해주어야 한다.
-    private DiscountPolicy discountPolicy;
+    // 최종 해결 방안 : 누군가가 OrderServiceImpl에 DiscountPolicy의 구현 객체를 대신 생성 후 주입해주어야 한다. -> AppConfig 생성
+    private final DiscountPolicy discountPolicy;
+
+
+    public OrderServiceImpl(MemberRepository memberRepository, DiscountPolicy discountPolicy) {
+        this.memberRepository = memberRepository;
+        this.discountPolicy = discountPolicy;
+    }
 
     @Override
     public Order createOrder(Long memberId, String itemName, int itemPrice) {
